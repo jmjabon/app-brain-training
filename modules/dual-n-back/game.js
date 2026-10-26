@@ -4,7 +4,7 @@ const TURN_DURATION = 2500; // 2.5 segundos por turno
 const STIMULUS_DURATION = 800; // El cuadrado brilla por 800ms
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'L']; // Letras claras en español
 
-let nLevel = 2;
+let nLevel = 1;
 let mode = 'manual'; // 'manual' o 'auto'
 let sequence = [];
 let currentTurn = 0;
