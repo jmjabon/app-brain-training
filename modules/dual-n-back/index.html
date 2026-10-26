@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Dual N-Back</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Pantalla de Configuración -->
+    <div id="setup-screen" class="screen active">
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='../../index.html'">← Hub</button>
+            <h1>Dual N-Back</h1>
+        </div>
+        
+        <div class="card">
+            <h2>Configuración</h2>
+            <div class="form-group">
+                <label>Nivel (N):</label>
+                <div class="stepper">
+                    <button id="btn-dec-n">-</button>
+                    <span id="n-value">2</span>
+                    <button id="btn-inc-n">+</button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Progresión:</label>
+                <div class="segmented-control">
+                    <button class="seg-btn active" data-mode="manual">Manual</button>
+                    <button class="seg-btn" data-mode="auto">Automática</button>
+                </div>
+                <p class="hint">Auto: Sube de nivel si superas el 80% de aciertos.</p>
+            </div>
+            
+            <button id="btn-start" class="primary-btn">Empezar Entrenamiento</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Juego -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <span id="game-n-indicator">N = 2</span>
+            <span id="game-turn-indicator">Turno 1 / 24</span>
+        </div>
+
+        <div class="grid-container">
+            <div class="grid" id="grid">
+                <!-- Generado por JS -->
+                <div class="cell" id="cell-0"></div><div class="cell" id="cell-1"></div><div class="cell" id="cell-2"></div>
+                <div class="cell" id="cell-3"></div><div class="cell" id="cell-4"></div><div class="cell" id="cell-5"></div>
+                <div class="cell" id="cell-6"></div><div class="cell" id="cell-7"></div><div class="cell" id="cell-8"></div>
+            </div>
+        </div>
+
+        <div class="controls">
+            <button id="btn-pos" class="action-btn">
+                <span class="icon">📍</span>
+                <span>Posición</span>
+            </button>
+            <button id="btn-audio" class="action-btn">
+                <span class="icon">🔊</span>
+                <span>Audio</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Resultados -->
+    <div id="result-screen" class="screen">
+        <div class="card">
+            <h2>Resultados</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-label">Posición</span>
+                    <span id="score-pos" class="stat-value">0%</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Audio</span>
+                    <span id="score-audio" class="stat-value">0%</span>
+                </div>
+            </div>
+            <p id="result-message" class="result-msg"></p>
+            
+            <button id="btn-play-again" class="primary-btn">Jugar de nuevo</button>
+            <button class="secondary-btn" onclick="window.location.href='../../index.html'">Volver al Hub</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
