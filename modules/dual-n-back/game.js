@@ -104,16 +104,28 @@ function playTurn() {
 }
 
 // --- CONTROLES DE USUARIO ---
-// Registramos el click para el turno *anterior* (currentTurn ya se ha incrementado al mostrarse)
-document.getElementById('btn-pos').addEventListener('touchstart', (e) => {
-    e.preventDefault(); // Evita doble tap
+function registerPos(e) {
+    if(e && e.cancelable) e.preventDefault();
     if (currentTurn > 0) userResponses.pos[currentTurn - 1] = true;
-});
+    console.log(`[JUEGO] Pulsado POSICIÓN en turno ${currentTurn}`);
+}
 
-document.getElementById('btn-audio').addEventListener('touchstart', (e) => {
-    e.preventDefault();
+function registerAudio(e) {
+    if(e && e.cancelable) e.preventDefault();
     if (currentTurn > 0) userResponses.audio[currentTurn - 1] = true;
-});
+    console.log(`[JUEGO] Pulsado AUDIO en turno ${currentTurn}`);
+}
+
+const btnPos = document.getElementById('btn-pos');
+const btnAudio = document.getElementById('btn-audio');
+
+// Soporte táctil para pantallas iOS
+btnPos.addEventListener('touchstart', registerPos, {passive: false});
+btnAudio.addEventListener('touchstart', registerAudio, {passive: false});
+
+// Soporte para clics de ratón en ordenadores
+btnPos.addEventListener('mousedown', registerPos);
+btnAudio.addEventListener('mousedown', registerAudio);
 
 
 // --- RESULTADOS ---
