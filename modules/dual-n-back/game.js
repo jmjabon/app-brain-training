@@ -61,17 +61,35 @@ function updateTurnsUI() { document.getElementById('turns-value').innerText = to
 // --- LÓGICA DEL JUEGO ---
 function generateSequence() {
     sequence = [];
+    
+    // 1. Generamos una secuencia completamente aleatoria primero
     for (let i = 0; i < totalTurns; i++) {
         let pos = Math.floor(Math.random() * 9);
         let audio = LETTERS[Math.floor(Math.random() * LETTERS.length)];
-        
-        // Forzar ~30% de aciertos para asegurar que el juego tenga sentido
-        if (i >= nLevel) {
-            if (Math.random() < 0.3) pos = sequence[i - nLevel].pos;
-            if (Math.random() < 0.3) audio = sequence[i - nLevel].audio;
-        }
         sequence.push({ pos, audio });
     }
+
+    // 2. Calculamos cuántas coincidencias EXACTAS queremos (30% de los turnos jugables)
+    const possibleMatches = totalTurns - nLevel;
+    if (possibleMatches <= 0) return; // Evita errores si seleccionas un N mayor que los turnos
+    
+    // Garantizamos matemáticamente al menos 1 coincidencia o el 30% del total
+    const targetMatches = Math.max(1, Math.round(possibleMatches * 0.3)); 
+
+    // 3. Función para elegir turnos al azar donde inyectaremos los aciertos
+    const getMatchIndices = () => {
+        let indices = [];
+        for (let i = nLevel; i < totalTurns; i++) indices.push(i);
+        // Barajamos los turnos posibles y nos quedamos con la cantidad exacta que necesitamos
+        return indices.sort(() => Math.random() - 0.5).slice(0, targetMatches);
+    };
+
+    // 4. Inyectamos los aciertos forzados sobreescribiendo el azar inicial
+    const posIndices = getMatchIndices();
+    const audioIndices = getMatchIndices();
+
+    posIndices.forEach(i => sequence[i].pos = sequence[i - nLevel].pos);
+    audioIndices.forEach(i => sequence[i].audio = sequence[i - nLevel].audio);
 }
 
 function startGame() {
