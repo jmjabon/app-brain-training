@@ -9,6 +9,59 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <!-- CONSOLA DE DEPURACIÓN VISUAL PARA iOS -->
+    <div id="ios-debug-console" style="position: fixed; bottom: 0; left: 0; right: 0; height: 35%; background: rgba(0,0,0,0.85); color: #0f0; font-family: monospace; font-size: 12px; overflow-y: scroll; z-index: 99999; padding: 10px; pointer-events: auto; backdrop-filter: blur(5px);">
+        <strong style="color: #fff;">Consola de Depuración Activa:</strong><br>
+    </div>
+
+    <script>
+        (function() {
+            const debugConsole = document.getElementById('ios-debug-console');
+            
+            function logToScreen(prefix, message, color) {
+                const line = document.createElement('div');
+                line.style.color = color;
+                line.style.borderBottom = '1px solid #333';
+                line.style.padding = '4px 0';
+                line.style.wordWrap = 'break-word';
+                
+                // Si el mensaje es un objeto (JSON), lo formatea para poder leerlo
+                const parsedMessage = typeof message === 'object' ? JSON.stringify(message) : message;
+                line.textContent = `${prefix} ${parsedMessage}`;
+                
+                debugConsole.appendChild(line);
+                debugConsole.scrollTop = debugConsole.scrollHeight; // Auto-scroll hacia abajo
+            }
+
+            // 1. Interceptar console.log
+            const originalLog = console.log;
+            console.log = function(...args) {
+                logToScreen('[LOG]', args.join(' '), '#00ff00');
+                originalLog.apply(console, args);
+            };
+
+            // 2. Interceptar console.error
+            const originalError = console.error;
+            console.error = function(...args) {
+                logToScreen('[ERR]', args.join(' '), '#ff3333');
+                originalError.apply(console, args);
+            };
+
+            // 3. Capturar Errores Fatales (Archivos no encontrados, fallos de sintaxis)
+            window.onerror = function(message, source, lineno, colno, error) {
+                const file = source ? source.split('/').pop() : 'Desconocido';
+                logToScreen('[FATAL]', `${message} (Archivo: ${file}, Línea: ${lineno})`, '#ff3333');
+                return false; 
+            };
+
+            // 4. Capturar Promesas Rechazadas (Muy útil para la Web Speech API o Cargas JSON)
+            window.addEventListener('unhandledrejection', function(event) {
+                logToScreen('[PROMISE]', `Rechazada: ${event.reason}`, '#ff9900');
+            });
+
+            console.log('Consola virtual inicializada correctamente.');
+        })();
+    </script>
     <!-- Pantalla de Configuración -->
     <div id="setup-screen" class="screen active">
         <div class="header">
