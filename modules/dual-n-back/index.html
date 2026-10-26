@@ -27,6 +27,40 @@
                 </div>
             </div>
             
+            <div class="card">
+            <h2>Configuración</h2>
+            
+            <div class="form-group">
+                <label>Nivel (N):</label>
+                <div class="stepper">
+                    <button id="btn-dec-n">-</button>
+                    <span id="n-value">1</span>
+                    <button id="btn-inc-n">+</button>
+                </div>
+            </div>
+
+            <!-- NUEVO SELECTOR DE TURNOS -->
+            <div class="form-group">
+                <label>Número de Turnos:</label>
+                <div class="stepper">
+                    <button id="btn-dec-turns">-</button>
+                    <span id="turns-value">12</span>
+                    <button id="btn-inc-turns">+</button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Progresión:</label>
+                <div class="segmented-control">
+                    <button class="seg-btn active" data-mode="manual">Manual</button>
+                    <button class="seg-btn" data-mode="auto">Automática</button>
+                </div>
+                <p class="hint">Auto: Sube de nivel si superas el 80% de aciertos.</p>
+            </div>
+            
+            <button id="btn-start" class="primary-btn">Empezar Entrenamiento</button>
+          </div>
+
             <div class="form-group">
                 <label>Progresión:</label>
                 <div class="segmented-control">

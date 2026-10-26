@@ -1,5 +1,5 @@
 // Constantes y Estado
-const TOTAL_TURNS = 12; // 24 turnos = aprox 1 minuto de juego
+let totalTurns = 12;
 const TURN_DURATION = 2500; // 2.5 segundos por turno
 const STIMULUS_DURATION = 800; // El cuadrado brilla por 800ms
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'L']; // Letras claras en español
@@ -53,10 +53,15 @@ document.getElementById('btn-close-game').onclick = () => {
     screens.setup.classList.add('active'); // Vuelve al menú
 };
 
+document.getElementById('btn-inc-turns').onclick = () => { totalTurns = Math.min(totalTurns + 6, 48); updateTurnsUI(); };
+document.getElementById('btn-dec-turns').onclick = () => { totalTurns = Math.max(totalTurns - 6, 6); updateTurnsUI(); };
+
+function updateTurnsUI() { document.getElementById('turns-value').innerText = totalTurns; }
+
 // --- LÓGICA DEL JUEGO ---
 function generateSequence() {
     sequence = [];
-    for (let i = 0; i < TOTAL_TURNS; i++) {
+    for (let i = 0; i < totalTurns; i++) {
         let pos = Math.floor(Math.random() * 9);
         let audio = LETTERS[Math.floor(Math.random() * LETTERS.length)];
         
@@ -72,7 +77,7 @@ function generateSequence() {
 function startGame() {
     generateSequence();
     currentTurn = 0;
-    userResponses = { pos: new Array(TOTAL_TURNS).fill(false), audio: new Array(TOTAL_TURNS).fill(false) };
+    userResponses = { pos: new Array(totalTurns).fill(false), audio: new Array(totalTurns).fill(false) };
     
     document.getElementById('game-n-indicator').innerText = `N = ${nLevel}`;
     
@@ -84,12 +89,12 @@ function startGame() {
 }
 
 function playTurn() {
-    if (currentTurn >= TOTAL_TURNS) {
+    if (currentTurn >= totalTurns) {
         endGame();
         return;
     }
 
-    document.getElementById('game-turn-indicator').innerText = `Turno ${currentTurn + 1} / ${TOTAL_TURNS}`;
+    document.getElementById('game-turn-indicator').innerText = `Turno ${currentTurn + 1} / ${totalTurns}`;
     const currentItem = sequence[currentTurn];
 
     // 1. Mostrar estímulo visual
@@ -144,7 +149,7 @@ function endGame() {
     let posCorrect = 0, posPossible = 0;
     let audioCorrect = 0, audioPossible = 0;
 
-    for (let i = nLevel; i < TOTAL_TURNS; i++) {
+    for (let i = nLevel; i < totalTurns; i++) {
         const isPosMatch = sequence[i].pos === sequence[i - nLevel].pos;
         const isAudioMatch = sequence[i].audio === sequence[i - nLevel].audio;
 
