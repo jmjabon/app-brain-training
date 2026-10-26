@@ -1,5 +1,5 @@
 // Constantes y Estado
-const TOTAL_TURNS = 24; // 24 turnos = aprox 1 minuto de juego
+const TOTAL_TURNS = 12; // 24 turnos = aprox 1 minuto de juego
 const TURN_DURATION = 2500; // 2.5 segundos por turno
 const STIMULUS_DURATION = 800; // El cuadrado brilla por 800ms
 const LETTERS = ['A', 'B', 'C', 'D', 'E', 'F', 'H', 'L']; // Letras claras en español
