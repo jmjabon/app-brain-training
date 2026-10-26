@@ -161,53 +161,78 @@ btnAudio.addEventListener('mousedown', registerAudio);
 // --- RESULTADOS ---
 function endGame() {
     clearTimeout(gameInterval);
+    synth.cancel();
     screens.game.classList.remove('active');
     screens.result.classList.add('active');
 
-    let posCorrect = 0, posPossible = 0;
-    let audioCorrect = 0, audioPossible = 0;
+    let posHits = 0, posMisses = 0, posFalseAlarms = 0;
+    let audioHits = 0, audioMisses = 0, audioFalseAlarms = 0;
+    
+    let logHTML = '<strong>Análisis de Turnos (N='+nLevel+')</strong><br><br>';
 
+    // Empezamos a evaluar desde el turno N (los primeros turnos no se pueden comparar)
     for (let i = nLevel; i < totalTurns; i++) {
         const isPosMatch = sequence[i].pos === sequence[i - nLevel].pos;
         const isAudioMatch = sequence[i].audio === sequence[i - nLevel].audio;
 
-        if (isPosMatch) posPossible++;
-        if (isAudioMatch) audioPossible++;
+        const pressedPos = userResponses.pos[i];
+        const pressedAudio = userResponses.audio[i];
 
-        // Aciertos (True Positive) o Aciertos por omisión (True Negative)
-        if (isPosMatch && userResponses.pos[i]) posCorrect++;
-        else if (!isPosMatch && !userResponses.pos[i]) { /* Podríamos contar los verdaderos negativos, pero mediremos sobre los targets */ }
+        // Lógica POSICIÓN
+        let posResult = '⚪ Correcto (Nada)';
+        if (isPosMatch && pressedPos) { posHits++; posResult = '✅ ACIERTO'; }
+        else if (isPosMatch && !pressedPos) { posMisses++; posResult = '❌ OMISIÓN'; }
+        else if (!isPosMatch && pressedPos) { posFalseAlarms++; posResult = '⚠️ FALSA ALARMA'; }
+
+        // Lógica AUDIO
+        let audioResult = '⚪ Correcto (Nada)';
+        if (isAudioMatch && pressedAudio) { audioHits++; audioResult = '✅ ACIERTO'; }
+        else if (isAudioMatch && !pressedAudio) { audioMisses++; audioResult = '❌ OMISIÓN'; }
+        else if (!isAudioMatch && pressedAudio) { audioFalseAlarms++; audioResult = '⚠️ FALSA ALARMA'; }
+
+        // Imprimir en el Log
+        logHTML += `<div style="border-bottom: 1px solid #ccc; padding: 8px 0;">`;
+        logHTML += `<strong style="color: var(--accent);">Turno ${i+1}</strong> 
+                    (Pos: ${sequence[i].pos}, Letra: ${sequence[i].audio})<br>`;
+        logHTML += `📍 Posición: ${posResult}<br>`;
+        logHTML += `🔊 Audio: ${audioResult}`;
+        logHTML += `</div>`;
     }
 
-    // Calcular porcentajes (evitando división por 0)
-    let posScore = posPossible > 0 ? Math.round((posCorrect / posPossible) * 100) : 100;
-    let audioScore = audioPossible > 0 ? Math.round((audioCorrect / audioPossible) * 100) : 100;
-    let totalScore = (posScore + audioScore) / 2;
+    document.getElementById('sequence-log').innerHTML = logHTML;
 
-    document.getElementById('score-pos').innerText = `${posScore}%`;
-    document.getElementById('score-audio').innerText = `${audioScore}%`;
+    // Mostrar el resumen de fallos y aciertos en la cabecera
+    document.getElementById('score-pos').innerHTML = 
+        `<span style="color: green;">${posHits}</span> | <span style="color: red;">${posMisses}</span> | <span style="color: orange;">${posFalseAlarms}</span>`;
+    document.getElementById('score-audio').innerHTML = 
+        `<span style="color: green;">${audioHits}</span> | <span style="color: red;">${audioMisses}</span> | <span style="color: orange;">${audioFalseAlarms}</span>`;
+    
+    // Para el modo automático, calculamos la precisión total (penalizando falsas alarmas)
+    const totalTargets = posHits + posMisses + audioHits + audioMisses;
+    const totalCorrect = posHits + audioHits;
+    const totalMistakes = posMisses + audioMisses + posFalseAlarms + audioFalseAlarms;
+    
+    // Fórmula de precisión que usamos en pruebas neuropsicológicas:
+    let totalScore = totalTargets > 0 ? Math.max(0, Math.round(((totalCorrect - (posFalseAlarms + audioFalseAlarms)) / totalTargets) * 100)) : 100;
 
     const msgEl = document.getElementById('result-message');
     
-
-    // Lógica de Modos (Manual vs Automático)
     if (mode === 'auto') {
         if (totalScore >= 80) {
-            nLevel = Math.min(nLevel + 1, 9); // Sube nivel (máximo 9)
-            msgEl.innerText = `¡Excelente! Subes al nivel N=${nLevel}`;
+            nLevel = Math.min(nLevel + 1, 9);
+            msgEl.innerText = `Precisión: ${totalScore}%. ¡Subes a N=${nLevel}!`;
             msgEl.style.color = 'var(--accent)';
         } else if (totalScore < 50 && nLevel > 1) {
-            nLevel--; // Baja nivel
-            msgEl.innerText = `Demasiado difícil. Bajamos a N=${nLevel} para reforzar.`;
+            nLevel--;
+            msgEl.innerText = `Precisión: ${totalScore}%. Bajamos a N=${nLevel}.`;
             msgEl.style.color = 'var(--text-sec)';
         } else {
-            msgEl.innerText = `Te mantienes en N=${nLevel}. Buen esfuerzo.`;
+            msgEl.innerText = `Precisión: ${totalScore}%. Te mantienes en N=${nLevel}.`;
             msgEl.style.color = 'var(--text-main)';
         }
-        updateNUI(); // ¡ESTA LÍNEA ES LA CLAVE! Actualiza el número en el menú
+        updateNUI();
     } else {
-        // En modo manual, el texto es genérico y el nivel no cambia
-        msgEl.innerText = totalScore >= 80 ? '¡Muy buen entrenamiento!' : 'Sigue practicando. La memoria de trabajo es como un músculo.';
+        msgEl.innerText = `Precisión global: ${totalScore}%`;
         msgEl.style.color = 'var(--text-main)';
     }
 }

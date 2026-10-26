@@ -81,21 +81,28 @@
         </div>
     </div>
 
-    <!-- Pantalla de Resultados -->
+<!-- Pantalla de Resultados -->
     <div id="result-screen" class="screen">
-        <div class="card">
+        <div class="card" style="display: flex; flex-direction: column; height: 100%;">
             <h2>Resultados</h2>
+            
             <div class="stats">
                 <div class="stat-box">
                     <span class="stat-label">Posición</span>
-                    <span id="score-pos" class="stat-value">0%</span>
+                    <span id="score-pos" class="stat-value" style="font-size: 18px;">-</span>
                 </div>
                 <div class="stat-box">
                     <span class="stat-label">Audio</span>
-                    <span id="score-audio" class="stat-value">0%</span>
+                    <span id="score-audio" class="stat-value" style="font-size: 18px;">-</span>
                 </div>
             </div>
+            
             <p id="result-message" class="result-msg"></p>
+            
+            <!-- NUEVO: Contenedor para el historial de la secuencia -->
+            <div id="sequence-log" style="flex: 1; overflow-y: auto; background: var(--cell-bg); border-radius: 12px; padding: 15px; margin-bottom: 20px; font-size: 13px; text-align: left; font-family: monospace;">
+                <!-- Se rellena con JS -->
+            </div>
             
             <button id="btn-play-again" class="primary-btn">Jugar de nuevo</button>
             <button class="secondary-btn" onclick="window.location.href='../../index.html'">Volver al Hub</button>
