@@ -11,7 +11,7 @@
     <link rel="apple-touch-icon" href="./assets/icons/icon-192x192.png">
     <link rel="manifest" href="./manifest.json">
     
-    <title>Brain Training Hub</title>
+    <title>Brain Training Menu</title>
     
     <style>
         /* Estilos globales y Modo Oscuro nativo iOS */
@@ -162,7 +162,7 @@
         </div>
         <div>
             <h3 style="margin-bottom: 5px;">Actividad Diaria</h3>
-            <p style="color: var(--text-sec); font-size: 15px;">Hub Principal Activo</p>
+            <p style="color: var(--text-sec); font-size: 15px;">Menú Principal Activo</p>
         </div>
     </div>
 
@@ -185,5 +185,51 @@
             </div>
         </button>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Fecha actual formateada para iOS en español
+            const dateEl = document.getElementById('date-display');
+            if (dateEl) {
+                const options = { weekday: 'long', month: 'long', day: 'numeric' };
+                const dateStr = new Date().toLocaleDateString('es-ES', options);
+                dateEl.innerText = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
+            }
+
+            // 2. Lectura de progreso desde localStorage y animación del anillo
+            setTimeout(() => {
+                const circle = document.getElementById('progress-circle');
+                const ringText = document.getElementById('ring-value');
+                if (!circle || !ringText) return;
+
+                const today = new Date().toDateString();
+                const activity = JSON.parse(localStorage.getItem('brainActivity')) || {};
+                const sessionsPlayed = activity.date === today ? (activity.sessions || 0) : 0;
+
+                // Objetivo: 3 entrenamientos diarios = 100%
+                const targetPercent = Math.min(Math.round((sessionsPlayed / 3) * 100), 100);
+
+                // Cálculo del trazo SVG (longitud de circunferencia: 220)
+                const offset = 220 - (220 * targetPercent) / 100;
+                circle.style.strokeDashoffset = offset;
+
+                if (targetPercent === 0) {
+                    ringText.innerText = '0%';
+                    return;
+                }
+
+                let current = 0;
+                const interval = setInterval(() => {
+                    if (current >= targetPercent) {
+                        clearInterval(interval);
+                    } else {
+                        current++;
+                        ringText.innerText = `${current}%`;
+                    }
+                }, 20);
+            }, 300);
+        });
+    </script>
+</body>
+</html>
 </body>
 </html>

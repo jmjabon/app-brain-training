@@ -235,4 +235,16 @@ function endGame() {
         msgEl.innerText = `Precisión global: ${totalScore}%`;
         msgEl.style.color = 'var(--text-main)';
     }
+
+    // Guardar progreso en el almacenamiento local del dispositivo
+    const today = new Date().toDateString();
+    let activity = JSON.parse(localStorage.getItem('brainActivity')) || {};
+    
+    // Si es un día nuevo, reseteamos el contador
+    if (activity.date !== today) {
+        activity = { date: today, sessions: 0 };
+    }
+    
+    activity.sessions += 1;
+    localStorage.setItem('brainActivity', JSON.stringify(activity));
 }
