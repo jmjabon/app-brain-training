@@ -46,6 +46,13 @@ document.getElementById('btn-play-again').onclick = () => {
     screens.setup.classList.add('active');
 };
 
+document.getElementById('btn-close-game').onclick = () => {
+    clearTimeout(gameInterval); // Detiene el temporizador de las luces
+    synth.cancel(); // Silencia la voz inmediatamente por si estaba hablando
+    screens.game.classList.remove('active');
+    screens.setup.classList.add('active'); // Vuelve al menú
+};
+
 // --- LÓGICA DEL JUEGO ---
 function generateSequence() {
     sequence = [];
@@ -159,16 +166,24 @@ function endGame() {
 
     const msgEl = document.getElementById('result-message');
     
-    // Lógica del modo Automático
-    if (mode === 'auto' && totalScore >= 80) {
-        nLevel++;
-        msgEl.innerText = `¡Excelente! Subes al nivel N=${nLevel}`;
-        msgEl.style.color = 'var(--accent)';
-    } else if (mode === 'auto' && totalScore < 50 && nLevel > 1) {
-        nLevel--;
-        msgEl.innerText = `Demasiado difícil. Bajamos a N=${nLevel} para reforzar.`;
-        msgEl.style.color = 'var(--text-sec)';
+
+    // Lógica de Modos (Manual vs Automático)
+    if (mode === 'auto') {
+        if (totalScore >= 80) {
+            nLevel = Math.min(nLevel + 1, 9); // Sube nivel (máximo 9)
+            msgEl.innerText = `¡Excelente! Subes al nivel N=${nLevel}`;
+            msgEl.style.color = 'var(--accent)';
+        } else if (totalScore < 50 && nLevel > 1) {
+            nLevel--; // Baja nivel
+            msgEl.innerText = `Demasiado difícil. Bajamos a N=${nLevel} para reforzar.`;
+            msgEl.style.color = 'var(--text-sec)';
+        } else {
+            msgEl.innerText = `Te mantienes en N=${nLevel}. Buen esfuerzo.`;
+            msgEl.style.color = 'var(--text-main)';
+        }
+        updateNUI(); // ¡ESTA LÍNEA ES LA CLAVE! Actualiza el número en el menú
     } else {
+        // En modo manual, el texto es genérico y el nivel no cambia
         msgEl.innerText = totalScore >= 80 ? '¡Muy buen entrenamiento!' : 'Sigue practicando. La memoria de trabajo es como un músculo.';
         msgEl.style.color = 'var(--text-main)';
     }
