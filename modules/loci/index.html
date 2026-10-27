@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Palacio de la Memoria</title>
+    <!-- Usamos ?v=1 para evitar la caché desde el principio -->
+    <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+    <div class="game-header">
+        <button id="btn-close" class="back-btn" style="font-size: 24px; font-weight: bold; padding: 0 10px;">✕</button>
+        <span style="font-weight: bold; color: var(--accent);">Habitación RND</span>
+        <span id="visited-counter" style="font-size: 14px; color: var(--text-sec);">0/5 Loci</span>
+    </div>
+
+    <!-- Habitación Virtual 2D -->
+    <div class="room-wrapper">
+        <div class="room">
+            <!-- Los 5 puntos de anclaje espaciales -->
+            <button class="locus" id="locus-bed" style="top: 10%; left: 10%;">🛏️</button>
+            <button class="locus" id="locus-window" style="top: 10%; right: 10%;">🪟</button>
+            <button class="locus" id="locus-bookshelf" style="bottom: 10%; left: 10%;">📚</button>
+            <button class="locus" id="locus-desk" style="bottom: 40%; right: 15%;">💻</button>
+            <button class="locus" id="locus-door" style="bottom: -25px; left: 40%; width: 60px; height: 10px; font-size:24px; background: #8B4513; border-radius: 0;">🚪</button>
+        </div>
+    </div>
+
+    <!-- Panel de Información (Donde aparece el concepto anclado) -->
+    <div class="info-panel" id="info-panel">
+        <h2 id="info-title">Selecciona un objeto</h2>
+        <p id="info-desc">Toca cualquier mueble de la habitación para descubrir qué recuerdo o concepto está anclado a él.</p>
+        <button id="btn-complete" class="primary-btn" style="display: none; margin-top: 20px;">Terminar Paseo Mental</button>
+    </div>
+
+    <script src="game.js?v=1"></script>
+</body>
+</html>
