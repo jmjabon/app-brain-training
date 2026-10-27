@@ -30,9 +30,21 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+html, body {
+    /* El anclaje absoluto para iOS */
+    height: 100dvh;
+    width: 100%;
+    position: fixed;
+    top: 0; 
+    left: 0;
+    overflow: hidden;
+}
+
 body {
-    background-color: var(--bg-color); color: var(--text-main);
-    height: 100vh; display: flex; flex-direction: column; overflow: hidden;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    display: flex;
+    flex-direction: column;
 }
 
 .screen { display: none; flex: 1; flex-direction: column; padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom); }
