@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Recuperación Espaciada</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="game-header">
+        <button id="btn-close" class="back-btn" style="font-size: 24px; font-weight: bold; padding: 0 10px;">✕</button>
+        <span id="cards-counter" style="font-weight: bold; color: var(--accent);">Tarjetas: 0</span>
+        <span style="width: 24px;"></span> <!-- Balance visual -->
+    </div>
+
+    <!-- Contenedor Principal (Donde ocurre la magia del giro 3D) -->
+    <div class="flashcard-wrapper" id="flashcard-container">
+        <div class="flashcard" id="flashcard">
+            
+            <!-- Cara Frontal (Pregunta) -->
+            <div class="card-face card-front">
+                <h2 id="card-q">Cargando...</h2>
+            </div>
+            
+            <!-- Cara Trasera (Respuesta) -->
+            <div class="card-face card-back">
+                <p id="card-a">Cargando...</p>
+            </div>
+            
+        </div>
+    </div>
+
+    <!-- Mensaje de fin de estudio -->
+    <div id="done-message" class="done-message">
+        <div style="font-size: 48px; margin-bottom: 20px;">🎉</div>
+        <h2>¡Estudio terminado!</h2>
+        <p style="color: var(--text-sec); margin-bottom: 30px;">Tu memoria a largo plazo se está consolidando.</p>
+        <button class="primary-btn" onclick="window.location.href='../../index.html'">Volver al Menú</button>
+    </div>
+
+    <!-- Controles de Evaluación -->
+    <div class="controls-area">
+        <button id="btn-show-answer" class="primary-btn" style="height: 60px;">Ver Respuesta</button>
+        
+        <div id="eval-buttons" class="eval-buttons">
+            <button class="eval-btn btn-hard" data-ease="hard">
+                <span class="label">Difícil</span>
+                <span class="sub-label">Otra vez</span>
+            </button>
+            <button class="eval-btn btn-good" data-ease="good">
+                <span class="label">Bien</span>
+                <span class="sub-label">Mañana</span>
+            </button>
+            <button class="eval-btn btn-easy" data-ease="easy">
+                <span class="label">Fácil</span>
+                <span class="sub-label">4 días</span>
+            </button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>

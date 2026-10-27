@@ -1,0 +1,96 @@
+:root {
+    --bg-color: #f2f2f7;
+    --card-bg: #ffffff;
+    --text-main: #000000;
+    --text-sec: #8e8e93;
+    --accent: #007aff;
+    --btn-hard: #ff3b30;
+    --btn-good: #ff9500;
+    --btn-easy: #34c759;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-color: #000000;
+        --card-bg: #1c1c1e;
+        --text-main: #ffffff;
+        --text-sec: #8e8e93;
+        --accent: #0a84ff;
+    }
+}
+
+html, body {
+    height: 100dvh; width: 100%; position: fixed; top: 0; left: 0; overflow: hidden;
+    background-color: var(--bg-color); color: var(--text-main);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex; flex-direction: column;
+    touch-action: manipulation; -webkit-user-select: none; user-select: none;
+    -webkit-tap-highlight-color: transparent; margin: 0; padding: 0;
+}
+
+.game-header {
+    display: flex; justify-content: space-between; align-items: center; 
+    padding: env(safe-area-inset-top) 20px 10px 20px;
+}
+.back-btn { background: none; border: none; color: var(--text-sec); }
+
+/* Motor de Tarjeta 3D */
+.flashcard-wrapper {
+    flex: 1; display: flex; justify-content: center; align-items: center;
+    perspective: 1200px; /* Profundidad del 3D */
+    padding: 20px;
+}
+
+.flashcard {
+    width: 100%; max-width: 400px; height: 50vh; min-height: 300px;
+    position: relative;
+    transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1);
+    transform-style: preserve-3d; /* Permite el renderizado de la cara oculta */
+}
+
+.flashcard.is-flipped {
+    transform: rotateY(180deg);
+}
+
+.card-face {
+    position: absolute; width: 100%; height: 100%;
+    -webkit-backface-visibility: hidden; backface-visibility: hidden;
+    background: var(--card-bg); border-radius: 24px;
+    padding: 30px; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    text-align: center; box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+}
+
+.card-front h2 { font-size: 24px; font-weight: 600; line-height: 1.4; }
+.card-back { transform: rotateY(180deg); } /* La parte trasera nace girada */
+.card-back p { font-size: 19px; line-height: 1.5; font-weight: 400; }
+
+/* Controles Inferiores */
+.controls-area {
+    padding: 20px 20px env(safe-area-inset-bottom);
+    background: var(--bg-color);
+}
+
+.primary-btn {
+    width: 100%; padding: 16px; border-radius: 16px; font-size: 18px; font-weight: 600;
+    border: none; background: var(--accent); color: white; transition: transform 0.1s;
+}
+.primary-btn:active { transform: scale(0.97); }
+
+.eval-buttons { display: none; gap: 10px; }
+.eval-btn {
+    flex: 1; height: 75px; border: none; border-radius: 16px;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    color: white; font-weight: 600; gap: 4px; transition: transform 0.1s;
+}
+.eval-btn:active { transform: scale(0.95); }
+.btn-hard { background: var(--btn-hard); }
+.btn-good { background: var(--btn-good); }
+.btn-easy { background: var(--btn-easy); }
+
+.label { font-size: 16px; }
+.sub-label { font-size: 12px; opacity: 0.8; font-weight: 400; }
+
+.done-message {
+    display: none; flex: 1; flex-direction: column; justify-content: center; 
+    align-items: center; text-align: center; padding: 40px;
+}
