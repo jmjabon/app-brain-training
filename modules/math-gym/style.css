@@ -76,10 +76,25 @@ h2 { margin-bottom: 20px; font-weight: 600; }
 
 /* Juego */
 .problem-container {
-    flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center;
+    flex: 1 1 auto; /* Permite que esta zona se encoja si hace falta */
+    min-height: 0; 
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
     font-size: 48px; font-weight: 300; letter-spacing: 2px;
 }
 #user-input { color: var(--accent); height: 60px; font-weight: 500; }
+
+.keypad {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+    padding-bottom: 10px; margin-top: auto; max-width: 400px; width: 100%; 
+    align-self: center; flex-shrink: 0; /* Evita que el contenedor del teclado se aplaste */
+}
+.key {
+    background: var(--key-bg); border: none; border-radius: 50px;
+    /* La altura se adapta: máximo 70px, pero si la pantalla es corta, usa el 9% de la altura (10dvh) */
+    height: min(9dvh, 70px); 
+    font-size: 28px; font-weight: 400; color: var(--text-main);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: background 0.1s;
+}
 
 /* Efectos visuales de acierto/fallo */
 .flash-green { animation: flashG 0.3s ease; }
@@ -87,16 +102,6 @@ h2 { margin-bottom: 20px; font-weight: 600; }
 @keyframes flashG { 0% { color: #34c759; transform: scale(1.1); } 100% { color: var(--text-main); transform: scale(1); } }
 @keyframes flashR { 0% { color: #ff3b30; transform: translateX(-10px); } 50% { transform: translateX(10px); } 100% { color: var(--text-main); transform: translateX(0); } }
 
-/* Teclado numérico */
-.keypad {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-    padding-bottom: 20px; margin-top: auto; max-width: 400px; width: 100%; align-self: center;
-}
-.key {
-    background: var(--key-bg); border: none; border-radius: 50px;
-    height: 70px; font-size: 28px; font-weight: 400; color: var(--text-main);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1); transition: background 0.1s;
-}
 .key:active { background: var(--key-press); }
 .action-key { background: var(--cell-bg); color: var(--text-main); font-size: 24px;}
 .enter-key { background: var(--accent); color: white; }
