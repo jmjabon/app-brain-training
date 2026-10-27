@@ -5,22 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="BrainHub">
+    <meta name="apple-mobile-web-app-title" content="BrainApp">
     
-    <!-- Enlaces al icono y al manifest para PWA -->
     <link rel="apple-touch-icon" href="./assets/icons/icon-192x192.png">
     <link rel="manifest" href="./manifest.json">
     
-    <title>Brain Training Menu</title>
+    <title>Menú de Entrenamiento</title>
     
     <style>
-        /* Estilos globales y Modo Oscuro nativo iOS */
         :root {
             --bg-color: #f2f2f7;
             --card-bg: #ffffff;
             --text-main: #000000;
             --text-sec: #8e8e93;
-            --accent: #34c759; /* Verde tipo Apple Fitness */
+            --accent: #34c759;
         }
         @media (prefers-color-scheme: dark) {
             :root {
@@ -32,123 +30,61 @@
             }
         }
         * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            touch-action: manipulation;
-            -webkit-user-select: none;
-            user-select: none;
+            box-sizing: border-box; margin: 0; padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            touch-action: manipulation; -webkit-user-select: none; user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
         body {
-            background-color: var(--bg-color);
-            color: var(--text-main);
+            background-color: var(--bg-color); color: var(--text-main);
             padding: env(safe-area-inset-top) 20px env(safe-area-inset-bottom);
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
+            height: 100vh; display: flex; flex-direction: column;
         }
-        .header {
-            padding: 20px 0;
-        }
-        .header h1 {
-            font-size: 34px;
-            font-weight: 700;
-            letter-spacing: -0.5px;
-        }
-        .header p {
-            color: var(--text-sec);
-            font-size: 17px;
-            margin-top: 5px;
-        }
+        .header { padding: 20px 0; }
+        .header h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.5px; }
+        .header p { color: var(--text-sec); font-size: 17px; margin-top: 5px; }
+        
         .dashboard-card {
-            background: var(--card-bg);
-            border-radius: 22px;
-            padding: 24px;
-            margin-top: 20px;
-            display: flex;
-            align-items: center;
+            background: var(--card-bg); border-radius: 22px; padding: 24px;
+            margin-top: 20px; display: flex; align-items: center;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
         }
         
-        /* Anillo de Actividad SVG */
-        .ring-container {
-            position: relative;
-            width: 80px;
-            height: 80px;
-            margin-right: 20px;
-        }
-        .ring-svg {
-            transform: rotate(-90deg);
-            width: 80px;
-            height: 80px;
-        }
-        .ring-bg {
-            fill: none;
-            stroke: #333333; /* Color de fondo del anillo */
-            stroke-width: 8;
-        }
+        /* Anillo de Actividad */
+        .ring-container { position: relative; width: 80px; height: 80px; margin-right: 20px; }
+        .ring-svg { transform: rotate(-90deg); width: 80px; height: 80px; }
+        .ring-bg { fill: none; stroke: #333333; stroke-width: 8; }
         .ring-progress {
-            fill: none;
-            stroke: var(--accent);
-            stroke-width: 8;
-            stroke-linecap: round;
-            stroke-dasharray: 220; 
-            stroke-dashoffset: 220;
-            transition: stroke-dashoffset 1.5s ease-out;
+            fill: none; stroke: var(--accent); stroke-width: 8; stroke-linecap: round;
+            stroke-dasharray: 220; stroke-dashoffset: 220;
+            transition: stroke-dashoffset 1s ease-out;
         }
         .ring-text {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-weight: 700;
-            font-size: 18px;
+            position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+            display: flex; justify-content: center; align-items: center;
+            font-weight: 700; font-size: 18px;
         }
         
-        /* Cuadrícula de módulos */
-        .modules-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 30px;
-        }
+        /* Botones de Módulos */
+        .modules-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 30px; }
         .module-btn {
-            background: var(--card-bg);
-            border: none;
-            border-radius: 18px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            font-size: 18px;
-            font-weight: 600;
-            color: var(--text-main);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-            text-align: left;
-            cursor: pointer;
+            background: var(--card-bg); border: none; border-radius: 18px; padding: 20px;
+            display: flex; align-items: center; font-size: 18px; font-weight: 600;
+            color: var(--text-main); box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            text-align: left; cursor: pointer; transition: transform 0.1s;
         }
-        .module-btn:active {
-            transform: scale(0.96);
-        }
+        .module-btn:active { transform: scale(0.96); }
         .module-icon {
-            font-size: 32px;
-            margin-right: 15px;
-            background: var(--bg-color);
-            width: 50px;
-            height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
+            font-size: 32px; margin-right: 15px; background: var(--bg-color);
+            width: 50px; height: 50px; display: flex; align-items: center;
+            justify-content: center; border-radius: 12px;
         }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>Entrenamiento</h1>
-        <p id="date-display">Hoy</p>
+        <p id="date-display">Cargando fecha...</p>
     </div>
 
     <!-- Tarjeta del anillo de progreso -->
@@ -167,7 +103,7 @@
     </div>
 
     <div class="modules-grid">
-        <!-- Botón que redirige a tu carpeta Dual N-Back -->
+        <!-- Dual N-Back -->
         <button class="module-btn" onclick="window.location.href='./modules/dual-n-back/index.html'">
             <div class="module-icon">🧠</div>
             <div>
@@ -176,39 +112,43 @@
             </div>
         </button>
 
-        <!-- Botón para el próximo módulo -->
-        <button class="module-btn" style="opacity: 0.6;">
+        <!-- Gimnasia Matemática -->
+        <button class="module-btn" onclick="window.location.href='./modules/math-gym/index.html'">
             <div class="module-icon">🔢</div>
             <div>
                 <div>Gimnasia Matemática</div>
+                <div style="font-size: 13px; color: var(--text-sec); margin-top: 4px; font-weight: normal;">Cálculo y velocidad de procesamiento</div>
+            </div>
+        </button>
+
+        <!-- Próximos módulos -->
+        <button class="module-btn" style="opacity: 0.6; pointer-events: none;">
+            <div class="module-icon">🗂️</div>
+            <div>
+                <div>Recuperación Espaciada</div>
                 <div style="font-size: 13px; color: var(--text-sec); margin-top: 4px; font-weight: normal;">Próximamente...</div>
             </div>
         </button>
     </div>
+
+    <!-- Script del Menú y el Anillo -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            // 1. Fecha actual formateada para iOS en español
-            const dateEl = document.getElementById('date-display');
-            if (dateEl) {
-                const options = { weekday: 'long', month: 'long', day: 'numeric' };
-                const dateStr = new Date().toLocaleDateString('es-ES', options);
-                dateEl.innerText = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
-            }
+            // 1. Fecha actual
+            const options = { weekday: 'long', month: 'long', day: 'numeric' };
+            const dateStr = new Date().toLocaleDateString('es-ES', options);
+            document.getElementById('date-display').innerText = dateStr.charAt(0).toUpperCase() + dateStr.slice(1);
 
-            // 2. Lectura de progreso desde localStorage y animación del anillo
+            // 2. Leer progreso y animar el anillo (Objetivo: 3 sesiones = 100%)
             setTimeout(() => {
                 const circle = document.getElementById('progress-circle');
                 const ringText = document.getElementById('ring-value');
-                if (!circle || !ringText) return;
-
+                
                 const today = new Date().toDateString();
                 const activity = JSON.parse(localStorage.getItem('brainActivity')) || {};
                 const sessionsPlayed = activity.date === today ? (activity.sessions || 0) : 0;
 
-                // Objetivo: 3 entrenamientos diarios = 100%
                 const targetPercent = Math.min(Math.round((sessionsPlayed / 3) * 100), 100);
-
-                // Cálculo del trazo SVG (longitud de circunferencia: 220)
                 const offset = 220 - (220 * targetPercent) / 100;
                 circle.style.strokeDashoffset = offset;
 
@@ -223,13 +163,11 @@
                         clearInterval(interval);
                     } else {
                         current++;
-                        ringText.innerText = `${current}%`;
+                        ringText.innerText = current + '%';
                     }
-                }, 20);
+                }, 20); // Velocidad de la animación del número
             }, 300);
         });
     </script>
-</body>
-</html>
 </body>
 </html>

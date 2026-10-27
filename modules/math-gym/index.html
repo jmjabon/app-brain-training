@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Gimnasia Matemática</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- Pantalla de Configuración -->
+    <div id="setup-screen" class="screen active">
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='../../index.html'">← Menú</button>
+            <h1>Math Gym</h1>
+        </div>
+        
+        <div class="card">
+            <h2>Configuración</h2>
+            
+            <div class="form-group">
+                <label>Dificultad:</label>
+                <div class="segmented-control">
+                    <button class="seg-btn active" data-diff="easy">Fácil</button>
+                    <button class="seg-btn" data-diff="medium">Medio</button>
+                    <button class="seg-btn" data-diff="hard">Difícil</button>
+                </div>
+                <p class="hint">Fácil (1-20), Medio (1-100), Difícil (decimales y porcentajes).</p>
+            </div>
+
+            <div class="form-group">
+                <label>Tiempo:</label>
+                <div class="segmented-control" id="time-control">
+                    <button class="seg-btn active" data-time="60">1 Min</button>
+                    <button class="seg-btn" data-time="120">2 Min</button>
+                </div>
+            </div>
+            
+            <button id="btn-start" class="primary-btn">Empezar Cálculo</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Juego -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <button id="btn-close-game" class="back-btn" style="font-size: 24px; font-weight: bold; padding: 0 10px;">✕</button>
+            <span id="score-indicator" style="font-weight: bold; color: var(--accent);">Puntos: 0</span>
+            <span id="time-indicator">01:00</span>
+        </div>
+
+        <!-- Zona del Problema -->
+        <div class="problem-container">
+            <div id="math-problem">24 + 15</div>
+            <div id="user-input">_</div>
+        </div>
+
+        <!-- Teclado Numérico iOS -->
+        <div class="keypad">
+            <button class="key" data-val="1">1</button>
+            <button class="key" data-val="2">2</button>
+            <button class="key" data-val="3">3</button>
+            <button class="key" data-val="4">4</button>
+            <button class="key" data-val="5">5</button>
+            <button class="key" data-val="6">6</button>
+            <button class="key" data-val="7">7</button>
+            <button class="key" data-val="8">8</button>
+            <button class="key" data-val="9">9</button>
+            <button class="key action-key" id="key-del">⌫</button>
+            <button class="key" data-val="0">0</button>
+            <button class="key action-key enter-key" id="key-enter">↵</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Resultados -->
+    <div id="result-screen" class="screen">
+        <div class="card">
+            <h2>Resultados</h2>
+            
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-label">Aciertos</span>
+                    <span id="res-correct" class="stat-value" style="color: #34c759;">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Fallos</span>
+                    <span id="res-wrong" class="stat-value" style="color: #ff3b30;">0</span>
+                </div>
+            </div>
+
+            <div class="stat-box" style="margin-top: 15px;">
+                <span class="stat-label">Puntuación Final</span>
+                <span id="res-score" class="stat-value" style="font-size: 32px; color: var(--accent);">0</span>
+            </div>
+            
+            <p id="result-message" class="result-msg" style="margin-top: 20px;"></p>
+            
+            <button id="btn-play-again" class="primary-btn">Jugar de nuevo</button>
+            <button class="secondary-btn" onclick="window.location.href='../../index.html'">Volver al Menú</button>
+        </div>
+    </div>
+
+    <script src="game.js"></script>
+</body>
+</html>
