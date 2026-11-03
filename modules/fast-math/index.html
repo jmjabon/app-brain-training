@@ -11,10 +11,9 @@
 <body>
     <!-- Pantalla 1: Selección de Truco -->
     <div id="setup-screen" class="screen active">
-        <div class="game-header">
+        <div class="header">
             <button class="back-btn" onclick="window.location.href='../../index.html'">← Menú</button>
-            <span style="font-weight: bold; color: var(--accent);">Atajos Matemáticos</span>
-            <span style="width: 50px;"></span>
+            <h1>Atajos</h1>
         </div>
         
         <div class="card">
@@ -24,14 +23,28 @@
                     <div class="module-icon">⚡</div>
                     <div>
                         <div>Multiplicar por 11</div>
-                        <div class="hint">Ej: 35 x 11 = 3 [3+5] 5 = 385</div>
+                        <div class="hint">Ej: 35 x 11 ➔ 3 [3+5] 5 ➔ 385</div>
                     </div>
                 </button>
-                <button class="module-btn" style="opacity: 0.5; pointer-events: none;">
-                    <div class="module-icon">🔒</div>
+                <button class="module-btn" data-trick="sq5">
+                    <div class="module-icon">🔥</div>
                     <div>
                         <div>Cuadrados en 5</div>
-                        <div class="hint">Próximamente...</div>
+                        <div class="hint">Ej: 65² ➔ 6x7 | 25 ➔ 4225</div>
+                    </div>
+                </button>
+                <button class="module-btn" data-trick="mul5">
+                    <div class="module-icon">🚀</div>
+                    <div>
+                        <div>Multiplicar por 5</div>
+                        <div class="hint">Ej: 428 x 5 ➔ (428/2)x10 ➔ 2140</div>
+                    </div>
+                </button>
+                <button class="module-btn" data-trick="near100">
+                    <div class="module-icon">💯</div>
+                    <div>
+                        <div>Cercanos a 100</div>
+                        <div class="hint">Ej: 98 x 97 ➔ (98-3) | (2x3) ➔ 9506</div>
                     </div>
                 </button>
             </div>
@@ -41,14 +54,12 @@
     <!-- Pantalla 2: Teoría -->
     <div id="theory-screen" class="screen">
         <div class="card" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
-            <h2 id="theory-title" style="color: var(--accent); text-align: center;">El Truco del 11</h2>
+            <h2 id="theory-title" style="color: var(--accent); text-align: center;">Título</h2>
             <p id="theory-desc" style="font-size: 18px; line-height: 1.5; margin-bottom: 20px;">
-                Para multiplicar cualquier número de dos cifras por 11, simplemente separa los dos dígitos y coloca su suma en el centro.
+                Descripción
             </p>
-            <div style="background: var(--cell-bg); padding: 15px; border-radius: 12px; text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 30px;">
-                42 x 11<br>
-                <span style="color: var(--text-sec); font-size: 18px;">4 _ 2 ➔ 4 (4+2) 2</span><br>
-                <span style="color: var(--accent);">462</span>
+            <div id="theory-example" style="background: var(--cell-bg); padding: 15px; border-radius: 12px; text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 30px;">
+                Ejemplo
             </div>
             <button id="btn-start-drill" class="primary-btn">Comenzar Ráfaga (1 Minuto)</button>
         </div>

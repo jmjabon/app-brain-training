@@ -6,7 +6,7 @@ let currentInput = "";
 let streak = 0;
 let correctCount = 0;
 let wrongCount = 0;
-let activeTrick = "11";
+let activeTrick = "";
 
 const screens = {
     setup: document.getElementById('setup-screen'),
@@ -20,14 +20,39 @@ const inputEl = document.getElementById('user-input');
 const timeEl = document.getElementById('time-indicator');
 const scoreEl = document.getElementById('score-indicator');
 
+const theoryData = {
+    "11": {
+        title: "El Truco del 11",
+        desc: "Para multiplicar un número de dos cifras por 11, separa los dos dígitos y coloca su suma en el centro.",
+        ex: "42 x 11<br><span style='color: var(--text-sec); font-size: 18px;'>4 _ 2 ➔ 4 (4+2) 2</span><br><span style='color: var(--accent);'>462</span>"
+    },
+    "sq5": {
+        title: "Cuadrados terminados en 5",
+        desc: "Multiplica el primer dígito por su número consecutivo, y añade siempre 25 al final.",
+        ex: "65²<br><span style='color: var(--text-sec); font-size: 18px;'>6 x 7 = 42</span><br><span style='color: var(--accent);'>4225</span>"
+    },
+    "mul5": {
+        title: "Multiplicar por 5",
+        desc: "Multiplicar por 5 es lo mismo que dividir entre 2 y multiplicar por 10 (añadir un cero).",
+        ex: "428 x 5<br><span style='color: var(--text-sec); font-size: 18px;'>428 ÷ 2 = 214</span><br><span style='color: var(--accent);'>2140</span>"
+    },
+    "near100": {
+        title: "Cercanos a 100",
+        desc: "Resta a 100 cada número. Resta cruzado para los primeros dos dígitos. Multiplica las diferencias para los dos últimos.",
+        ex: "98 x 97<br><span style='color: var(--text-sec); font-size: 18px;'>(100-98=2) y (100-97=3)<br>98 - 3 = 95 | 2 x 3 = 06</span><br><span style='color: var(--accent);'>9506</span>"
+    }
+};
+
 // 1. Navegación
 document.querySelectorAll('.module-btn').forEach(btn => {
     btn.onclick = (e) => {
         activeTrick = e.currentTarget.dataset.trick;
-        if(activeTrick === "11") {
-            screens.setup.classList.remove('active');
-            screens.theory.classList.add('active');
-        }
+        document.getElementById('theory-title').innerText = theoryData[activeTrick].title;
+        document.getElementById('theory-desc').innerText = theoryData[activeTrick].desc;
+        document.getElementById('theory-example').innerHTML = theoryData[activeTrick].ex;
+        
+        screens.setup.classList.remove('active');
+        screens.theory.classList.add('active');
     };
 });
 
@@ -72,11 +97,24 @@ function generateProblem() {
     currentInput = "";
     updateUI();
     
+    let a, b;
     if (activeTrick === "11") {
-        // Generar un número de 2 cifras aleatorio
-        const a = Math.floor(Math.random() * 90) + 10; 
+        a = Math.floor(Math.random() * 89) + 10; 
         currentAnswer = a * 11;
         probEl.innerText = `${a} × 11`;
+    } else if (activeTrick === "sq5") {
+        a = (Math.floor(Math.random() * 9) + 1) * 10 + 5; 
+        currentAnswer = a * a;
+        probEl.innerText = `${a}²`;
+    } else if (activeTrick === "mul5") {
+        a = (Math.floor(Math.random() * 499) + 10) * 2; // Forzar números pares para fluidez
+        currentAnswer = a * 5;
+        probEl.innerText = `${a} × 5`;
+    } else if (activeTrick === "near100") {
+        a = Math.floor(Math.random() * 9) + 91; // 91 a 99
+        b = Math.floor(Math.random() * 9) + 91;
+        currentAnswer = a * b;
+        probEl.innerText = `${a} × ${b}`;
     }
     probEl.classList.remove('flash-green', 'flash-red');
 }
@@ -128,7 +166,7 @@ function endGame() {
     document.getElementById('res-wrong').innerText = wrongCount;
     
     const accuracy = correctCount > 0 ? Math.round((correctCount / (correctCount + wrongCount)) * 100) : 0;
-    document.getElementById('result-message').innerText = accuracy > 80 ? "¡El atajo se está automatizando en tu cerebro!" : "Céntrate en separar y sumar. La velocidad llegará después.";
+    document.getElementById('result-message').innerText = accuracy > 80 ? "¡El atajo se está automatizando en tu cerebro!" : "Céntrate en el patrón. La velocidad llegará después.";
     
     // Conexión con el anillo de actividad del menú principal
     const today = new Date().toDateString();

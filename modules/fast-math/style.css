@@ -3,7 +3,7 @@
     --card-bg: #ffffff;
     --text-main: #000000;
     --text-sec: #8e8e93;
-    --accent: #5e5ce6; /* Púrpura para diferenciarlo del naranja del Math Gym */
+    --accent: #5e5ce6; 
     --cell-bg: #e5e5ea;
     --key-bg: #ffffff;
     --key-press: #d1d1d6;
@@ -38,10 +38,11 @@ html, body {
 }
 .screen.active { display: flex; }
 
-.game-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
+.header, .game-header { display: flex; justify-content: space-between; align-items: center; padding: 15px 0; }
 .back-btn { background: none; border: none; color: var(--text-sec); font-size: 16px; font-weight: 500; }
 
 .card { background: var(--card-bg); border-radius: 18px; padding: 24px; margin-top: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+h1 { font-size: 34px; font-weight: 700; letter-spacing: -0.5px; }
 h2 { margin-bottom: 20px; font-weight: 600; }
 
 .modules-grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
