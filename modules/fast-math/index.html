@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Cálculo Acelerado</title>
+    <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+    <!-- Pantalla 1: Selección de Truco -->
+    <div id="setup-screen" class="screen active">
+        <div class="game-header">
+            <button class="back-btn" onclick="window.location.href='../../index.html'">← Menú</button>
+            <span style="font-weight: bold; color: var(--accent);">Atajos Matemáticos</span>
+            <span style="width: 50px;"></span>
+        </div>
+        
+        <div class="card">
+            <h2>Selecciona una técnica</h2>
+            <div class="modules-grid">
+                <button class="module-btn" data-trick="11">
+                    <div class="module-icon">⚡</div>
+                    <div>
+                        <div>Multiplicar por 11</div>
+                        <div class="hint">Ej: 35 x 11 = 3 [3+5] 5 = 385</div>
+                    </div>
+                </button>
+                <button class="module-btn" style="opacity: 0.5; pointer-events: none;">
+                    <div class="module-icon">🔒</div>
+                    <div>
+                        <div>Cuadrados en 5</div>
+                        <div class="hint">Próximamente...</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pantalla 2: Teoría -->
+    <div id="theory-screen" class="screen">
+        <div class="card" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+            <h2 id="theory-title" style="color: var(--accent); text-align: center;">El Truco del 11</h2>
+            <p id="theory-desc" style="font-size: 18px; line-height: 1.5; margin-bottom: 20px;">
+                Para multiplicar cualquier número de dos cifras por 11, simplemente separa los dos dígitos y coloca su suma en el centro.
+            </p>
+            <div style="background: var(--cell-bg); padding: 15px; border-radius: 12px; text-align: center; font-size: 24px; font-weight: bold; margin-bottom: 30px;">
+                42 x 11<br>
+                <span style="color: var(--text-sec); font-size: 18px;">4 _ 2 ➔ 4 (4+2) 2</span><br>
+                <span style="color: var(--accent);">462</span>
+            </div>
+            <button id="btn-start-drill" class="primary-btn">Comenzar Ráfaga (1 Minuto)</button>
+        </div>
+    </div>
+
+    <!-- Pantalla 3: Juego (Teclado iOS) -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <button id="btn-close-game" class="back-btn" style="font-size: 24px; font-weight: bold; padding: 0 10px;">✕</button>
+            <span id="score-indicator" style="font-weight: bold; color: var(--accent);">Racha: 0</span>
+            <span id="time-indicator">01:00</span>
+        </div>
+
+        <div class="problem-container">
+            <div id="math-problem">42 × 11</div>
+            <div id="user-input">_</div>
+        </div>
+
+        <div class="keypad">
+            <button class="key" data-val="1">1</button>
+            <button class="key" data-val="2">2</button>
+            <button class="key" data-val="3">3</button>
+            <button class="key" data-val="4">4</button>
+            <button class="key" data-val="5">5</button>
+            <button class="key" data-val="6">6</button>
+            <button class="key" data-val="7">7</button>
+            <button class="key" data-val="8">8</button>
+            <button class="key" data-val="9">9</button>
+            <button class="key action-key" id="key-del">⌫</button>
+            <button class="key" data-val="0">0</button>
+            <button class="key action-key enter-key" id="key-enter">↵</button>
+        </div>
+    </div>
+
+    <!-- Pantalla 4: Resultados -->
+    <div id="result-screen" class="screen">
+        <div class="card">
+            <h2>Resultados del Truco</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-label">Aciertos Rápidos</span>
+                    <span id="res-correct" class="stat-value" style="color: #34c759;">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Fallos</span>
+                    <span id="res-wrong" class="stat-value" style="color: #ff3b30;">0</span>
+                </div>
+            </div>
+            <p id="result-message" class="result-msg" style="margin-top: 20px; font-size: 16px;"></p>
+            <button id="btn-play-again" class="primary-btn">Entrenar de nuevo</button>
+            <button class="secondary-btn" onclick="window.location.href='../../index.html'">Volver al Menú</button>
+        </div>
+    </div>
+
+    <script src="game.js?v=1"></script>
+</body>
+</html>
