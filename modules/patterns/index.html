@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Patrones Lógicos</title>
+    <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+    <!-- Pantalla de Configuración -->
+    <div id="setup-screen" class="screen active">
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='../../index.html'">← Menú</button>
+            <h1>Algoritmia</h1>
+        </div>
+        
+        <div class="card">
+            <h2>Selecciona el patrón</h2>
+            <div class="modules-grid">
+                <button class="module-btn active" data-mode="div3">
+                    <div class="module-icon">➗</div>
+                    <div>
+                        <div>Divisibilidad por 3</div>
+                        <div class="hint">Regla de la suma de cifras.</div>
+                    </div>
+                </button>
+                <button class="module-btn" data-mode="div4">
+                    <div class="module-icon">✂️</div>
+                    <div>
+                        <div>Divisibilidad por 4</div>
+                        <div class="hint">Regla de las dos últimas cifras.</div>
+                    </div>
+                </button>
+                <button class="module-btn" data-mode="series">
+                    <div class="module-icon">📈</div>
+                    <div>
+                        <div>Series Numéricas</div>
+                        <div class="hint">Encuentra el salto lógico.</div>
+                    </div>
+                </button>
+            </div>
+            <button id="btn-to-theory" class="primary-btn" style="margin-top: 25px;">Continuar</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Teoría -->
+    <div id="theory-screen" class="screen">
+        <div class="card" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+            <h2 id="theory-title" style="color: var(--accent); text-align: center;">Título</h2>
+            <div id="theory-desc" style="font-size: 16px; line-height: 1.5; margin-bottom: 20px;"></div>
+            <button id="btn-start" class="primary-btn">Empezar Reto (1 Min)</button>
+            <button class="secondary-btn" id="btn-back-setup">Volver a Escenarios</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Juego -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <button id="btn-close-game" class="back-btn" style="font-size: 24px; font-weight: bold; padding: 0 10px;">✕</button>
+            <span id="score-indicator" style="font-weight: bold; color: var(--accent);">Racha: 0</span>
+            <span id="time-indicator">01:00</span>
+        </div>
+
+        <div class="problem-container">
+            <div id="math-problem">¿Es divisible?</div>
+            <div id="user-input">_</div>
+        </div>
+
+        <!-- Botones de Verdad/Falso para divisibilidad -->
+        <div id="controls-yesno" class="controls-binary">
+            <button class="binary-btn btn-no" id="btn-no">❌ NO</button>
+            <button class="binary-btn btn-yes" id="btn-yes">✅ SÍ</button>
+        </div>
+
+        <!-- Teclado para Series -->
+        <div id="controls-keypad" class="keypad" style="display: none;">
+            <button class="key" data-val="1">1</button>
+            <button class="key" data-val="2">2</button>
+            <button class="key" data-val="3">3</button>
+            <button class="key" data-val="4">4</button>
+            <button class="key" data-val="5">5</button>
+            <button class="key" data-val="6">6</button>
+            <button class="key" data-val="7">7</button>
+            <button class="key" data-val="8">8</button>
+            <button class="key" data-val="9">9</button>
+            <button class="key action-key" id="key-del">⌫</button>
+            <button class="key" data-val="0">0</button>
+            <button class="key action-key enter-key" id="key-enter">↵</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Resultados -->
+    <div id="result-screen" class="screen">
+        <div class="card">
+            <h2>Resultados</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-label">Aciertos</span>
+                    <span id="res-correct" class="stat-value" style="color: #34c759;">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Fallos</span>
+                    <span id="res-wrong" class="stat-value" style="color: #ff3b30;">0</span>
+                </div>
+            </div>
+            <p id="result-message" class="result-msg" style="margin-top: 20px; font-size: 16px;"></p>
+            <button id="btn-play-again" class="primary-btn">Entrenar de nuevo</button>
+            <button class="secondary-btn" onclick="window.location.href='../../index.html'">Volver al Menú</button>
+        </div>
+    </div>
+
+    <script src="game.js?v=1"></script>
+</body>
+</html>
