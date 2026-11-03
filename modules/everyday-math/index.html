@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css?v=1">
 </head>
 <body>
-    <!-- Pantalla de Configuración -->
+<!-- Pantalla de Configuración -->
     <div id="setup-screen" class="screen active">
         <div class="header">
             <button class="back-btn" onclick="window.location.href='../../index.html'">← Menú</button>
@@ -34,7 +34,22 @@
                     </div>
                 </button>
             </div>
-            <button id="btn-start" class="primary-btn" style="margin-top: 25px;">Empezar Reto (1 Min)</button>
+            <!-- El botón ahora se llama "Continuar" para ir a la teoría -->
+            <button id="btn-to-theory" class="primary-btn" style="margin-top: 25px;">Continuar</button>
+        </div>
+    </div>
+
+    <!-- NUEVA: Pantalla de Teoría -->
+    <div id="theory-screen" class="screen">
+        <div class="card" style="flex: 1; display: flex; flex-direction: column; justify-content: center;">
+            <h2 id="theory-title" style="color: var(--accent); text-align: center;">Título</h2>
+            
+            <div id="theory-desc" style="font-size: 16px; line-height: 1.5; margin-bottom: 20px;">
+                <!-- Rellenado por JS -->
+            </div>
+            
+            <button id="btn-start" class="primary-btn">Empezar Reto (1 Min)</button>
+            <button class="secondary-btn" id="btn-back-setup">Volver a Escenarios</button>
         </div>
     </div>
 

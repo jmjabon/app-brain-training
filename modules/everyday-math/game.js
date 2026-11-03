@@ -10,6 +10,7 @@ let activeMode = "tips";
 
 const screens = {
     setup: document.getElementById('setup-screen'),
+    theory: document.getElementById('theory-screen'),
     game: document.getElementById('game-screen'),
     result: document.getElementById('result-screen')
 };
@@ -20,6 +21,32 @@ const inputEl = document.getElementById('user-input');
 const timeEl = document.getElementById('time-indicator');
 const scoreEl = document.getElementById('score-indicator');
 
+// Datos de la Teoría Cotidiana
+const theoryData = {
+    "tips": {
+        title: "Reglas para Propinas",
+        html: `
+            <p style="margin-bottom:10px;">La clave es usar el <strong>10%</strong> como base (moviendo la coma una posición a la izquierda).</p>
+            <ul style="padding-left: 20px; margin-bottom:15px; color: var(--text-sec);">
+                <li><strong>10%</strong> ➔ Ej: 40€ = 4€</li>
+                <li><strong>20%</strong> ➔ Doble del 10%. (Ej: 4 x 2 = 8€)</li>
+                <li><strong>15%</strong> ➔ 10% + su mitad. (Ej: 4 + 2 = 6€)</li>
+            </ul>
+        `
+    },
+    "discounts": {
+        title: "Atajos de Rebajas",
+        html: `
+            <p style="margin-bottom:10px;">Para saber el <strong>precio final</strong>, resta mentalmente el descuento usando fracciones rápidas:</p>
+            <ul style="padding-left: 20px; margin-bottom:15px; color: var(--text-sec);">
+                <li><strong>50%</strong> ➔ Mitad de precio.</li>
+                <li><strong>25%</strong> ➔ Resta una cuarta parte (mitad de la mitad).</li>
+                <li><strong>20% o 10%</strong> ➔ Calcula el 10% moviendo la coma y réstalo.</li>
+            </ul>
+        `
+    }
+};
+
 // 1. UI Navegación
 document.querySelectorAll('.module-btn').forEach(btn => {
     btn.onclick = (e) => {
@@ -28,20 +55,37 @@ document.querySelectorAll('.module-btn').forEach(btn => {
         activeMode = e.currentTarget.dataset.mode;
     };
 });
-// Marcar el primero por defecto
 document.querySelector('.module-btn[data-mode="tips"]').classList.add('active');
 
-document.getElementById('btn-start').onclick = startGame;
-document.getElementById('btn-play-again').onclick = () => {
-    screens.result.classList.remove('active');
+// Navegación Setup -> Teoría
+document.getElementById('btn-to-theory').onclick = () => {
+    document.getElementById('theory-title').innerText = theoryData[activeMode].title;
+    document.getElementById('theory-desc').innerHTML = theoryData[activeMode].html;
+    screens.setup.classList.remove('active');
+    screens.theory.classList.add('active');
+};
+
+// Navegación Teoría -> Setup
+document.getElementById('btn-back-setup').onclick = () => {
+    screens.theory.classList.remove('active');
     screens.setup.classList.add('active');
 };
+
+// Botón Empezar (Desde Teoría)
+document.getElementById('btn-start').onclick = startGame;
+
+document.getElementById('btn-play-again').onclick = () => {
+    screens.result.classList.remove('active');
+    screens.theory.classList.add('active');
+};
+
 document.getElementById('btn-close-game').onclick = () => {
     clearInterval(timerInterval);
     screens.game.classList.remove('active');
     screens.setup.classList.add('active');
 };
 
+// 2. Motor de Juego (mantén tu startGame, generateScenario, endGame, etc. exactamente igual debajo de esto)
 // 2. Motor de Juego
 function startGame() {
     streak = 0; correctCount = 0; wrongCount = 0;
