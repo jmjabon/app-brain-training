@@ -52,6 +52,36 @@ const theoryData = {
                 <li>El salto constante es +3. La respuesta es 14.</li>
             </ul>
         `
+    },
+    "div5": {
+        title: "Regla del 5",
+        html: `
+            <p style="margin-bottom:10px;">Un número es divisible por 5 si su <strong>última cifra</strong> es 0 o 5.</p>
+            <ul style="padding-left: 20px; margin-bottom:15px; color: var(--text-sec);">
+                <li>Ej: 14.89<strong>5</strong> ➔ Termina en 5.</li>
+                <li>Por lo tanto, es divisible por 5.</li>
+            </ul>
+        `
+    },
+    "div6": {
+        title: "Regla del 6",
+        html: `
+            <p style="margin-bottom:10px;">Para ser divisible por 6, tiene que cumplir dos reglas a la vez: ser par (divisible por 2) y la suma de sus cifras debe estar en la tabla del 3 (divisible por 3).</p>
+            <ul style="padding-left: 20px; margin-bottom:15px; color: var(--text-sec);">
+                <li>Ej: <strong>312</strong> ➔ Es par. Y 3+1+2 = 6.</li>
+                <li>Cumple ambas, es divisible por 6.</li>
+            </ul>
+        `
+    },
+    "div9": {
+        title: "Regla del 9",
+        html: `
+            <p style="margin-bottom:10px;">Igual que la regla del 3: un número es divisible por 9 si <strong>la suma de todas sus cifras</strong> da un múltiplo de 9.</p>
+            <ul style="padding-left: 20px; margin-bottom:15px; color: var(--text-sec);">
+                <li>Ej: <strong>7.812</strong> ➔ 7+8+1+2 = 18.</li>
+                <li>18 es múltiplo de 9, así que el número original también lo es.</li>
+            </ul>
+        `
     }
 };
 
@@ -172,6 +202,45 @@ function generateProblem() {
             currentAnswer = start * Math.pow(step, 3);
             probEl.innerText = `${start}, ${start * step}, ${start * Math.pow(step, 2)}, _`;
         }
+    } else if (activeMode === "div5") {
+        const num = Math.floor(Math.random() * 90000) + 10000; 
+        let finalNum = num;
+        
+        if (Math.random() < 0.5) {
+            // Forzar que termine en 0 o 5
+            const lastDigit = Math.random() < 0.5 ? 0 : 5;
+            finalNum = parseInt(finalNum.toString().slice(0, -1) + lastDigit);
+        }
+        
+        const endsWith = finalNum % 10;
+        currentAnswer = (endsWith === 0 || endsWith === 5);
+        probEl.innerText = finalNum.toLocaleString('es-ES');
+        
+    } else if (activeMode === "div6") {
+        const num = Math.floor(Math.random() * 900) + 100; // 3 cifras para cálculo rápido
+        let finalNum = num;
+        
+        if (Math.random() < 0.4) {
+            const remainder = finalNum % 6;
+            if (remainder !== 0) finalNum += (6 - remainder);
+        }
+        
+        currentAnswer = (finalNum % 6 === 0);
+        probEl.innerText = finalNum.toLocaleString('es-ES');
+        
+    } else if (activeMode === "div9") {
+        const num = Math.floor(Math.random() * 9000) + 1000; 
+        let finalNum = num;
+        
+        if (Math.random() < 0.4) {
+            const sum = finalNum.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+            const remainder = sum % 9;
+            if (remainder !== 0) finalNum += (9 - remainder);
+        }
+        
+        const finalSum = finalNum.toString().split('').reduce((a, b) => parseInt(a) + parseInt(b), 0);
+        currentAnswer = (finalSum % 9 === 0);
+        probEl.innerText = finalNum.toLocaleString('es-ES');
     }
 }
 
