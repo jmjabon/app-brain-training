@@ -40,7 +40,7 @@ const theoryData = {
         title: "Cercanos a 100",
         desc: "Resta a 100 cada número. Resta cruzado para los primeros dos dígitos. Multiplica las diferencias para los dos últimos.",
         ex: "98 x 97<br><span style='color: var(--text-sec); font-size: 18px;'>(100-98=2) y (100-97=3)<br>98 - 3 = 95 | 2 x 3 = 06</span><br><span style='color: var(--accent);'>9506</span>"
-    }
+    },
     "div5": {
         title: "Dividir entre 5",
         desc: "Dividir entre 5 es lo mismo que multiplicar por 2 y quitar un cero (dividir entre 10).",
