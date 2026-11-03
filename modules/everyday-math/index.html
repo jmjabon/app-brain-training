@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Matemática Cotidiana</title>
+    <link rel="stylesheet" href="style.css?v=1">
+</head>
+<body>
+    <!-- Pantalla de Configuración -->
+    <div id="setup-screen" class="screen active">
+        <div class="header">
+            <button class="back-btn" onclick="window.location.href='../../index.html'">← Menú</button>
+            <h1>Día a Día</h1>
+        </div>
+        
+        <div class="card">
+            <h2>Selecciona el escenario</h2>
+            <div class="modules-grid">
+                <button class="module-btn" data-mode="tips">
+                    <div class="module-icon">☕</div>
+                    <div>
+                        <div>Cálculo de Propinas</div>
+                        <div class="hint">Calcula el 10%, 15% o 20% de una cuenta.</div>
+                    </div>
+                </button>
+                <button class="module-btn" data-mode="discounts">
+                    <div class="module-icon">🏷️</div>
+                    <div>
+                        <div>Descuentos (Rebajas)</div>
+                        <div class="hint">Calcula el precio final tras aplicar la rebaja.</div>
+                    </div>
+                </button>
+            </div>
+            <button id="btn-start" class="primary-btn" style="margin-top: 25px;">Empezar Reto (1 Min)</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Juego -->
+    <div id="game-screen" class="screen">
+        <div class="game-header">
+            <button id="btn-close-game" class="back-btn" style="font-size: 24px; font-weight: bold; padding: 0 10px;">✕</button>
+            <span id="score-indicator" style="font-weight: bold; color: var(--accent);">Racha: 0</span>
+            <span id="time-indicator">01:00</span>
+        </div>
+
+        <div class="problem-container">
+            <div id="scenario-context" style="font-size: 24px; color: var(--text-sec); margin-bottom: 10px;">Cuenta: 40€</div>
+            <div id="math-problem">Propina del 15%</div>
+            <div id="user-input">_</div>
+        </div>
+
+        <div class="keypad">
+            <button class="key" data-val="1">1</button>
+            <button class="key" data-val="2">2</button>
+            <button class="key" data-val="3">3</button>
+            <button class="key" data-val="4">4</button>
+            <button class="key" data-val="5">5</button>
+            <button class="key" data-val="6">6</button>
+            <button class="key" data-val="7">7</button>
+            <button class="key" data-val="8">8</button>
+            <button class="key" data-val="9">9</button>
+            <button class="key action-key" id="key-del">⌫</button>
+            <button class="key" data-val="0">0</button>
+            <button class="key action-key enter-key" id="key-enter">↵</button>
+        </div>
+    </div>
+
+    <!-- Pantalla de Resultados -->
+    <div id="result-screen" class="screen">
+        <div class="card">
+            <h2>Resultados</h2>
+            <div class="stats">
+                <div class="stat-box">
+                    <span class="stat-label">Aciertos</span>
+                    <span id="res-correct" class="stat-value" style="color: #34c759;">0</span>
+                </div>
+                <div class="stat-box">
+                    <span class="stat-label">Fallos</span>
+                    <span id="res-wrong" class="stat-value" style="color: #ff3b30;">0</span>
+                </div>
+            </div>
+            <p id="result-message" class="result-msg" style="margin-top: 20px; font-size: 16px;"></p>
+            <button id="btn-play-again" class="primary-btn">Entrenar de nuevo</button>
+            <button class="secondary-btn" onclick="window.location.href='../../index.html'">Volver al Menú</button>
+        </div>
+    </div>
+
+    <script src="game.js?v=1"></script>
+</body>
+</html>
