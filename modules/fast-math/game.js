@@ -41,6 +41,21 @@ const theoryData = {
         desc: "Resta a 100 cada número. Resta cruzado para los primeros dos dígitos. Multiplica las diferencias para los dos últimos.",
         ex: "98 x 97<br><span style='color: var(--text-sec); font-size: 18px;'>(100-98=2) y (100-97=3)<br>98 - 3 = 95 | 2 x 3 = 06</span><br><span style='color: var(--accent);'>9506</span>"
     }
+    "div5": {
+        title: "Dividir entre 5",
+        desc: "Dividir entre 5 es lo mismo que multiplicar por 2 y quitar un cero (dividir entre 10).",
+        ex: "420 ÷ 5<br><span style='color: var(--text-sec); font-size: 18px;'>420 x 2 = 840 ➔ 840 ÷ 10</span><br><span style='color: var(--accent);'>84</span>"
+    },
+    "mul9": {
+        title: "Multiplicar por 9",
+        desc: "Añade un cero (multiplica por 10) y réstale el número original.",
+        ex: "45 x 9<br><span style='color: var(--text-sec); font-size: 18px;'>450 - 45</span><br><span style='color: var(--accent);'>405</span>"
+    },
+    "mul15": {
+        title: "Multiplicar por 15",
+        desc: "Multiplica el número por 10 (añade un cero) y súmale la mitad de ese resultado.",
+        ex: "24 x 15<br><span style='color: var(--text-sec); font-size: 18px;'>240 + 120</span><br><span style='color: var(--accent);'>360</span>"
+    }
 };
 
 // 1. Navegación
@@ -107,14 +122,28 @@ function generateProblem() {
         currentAnswer = a * a;
         probEl.innerText = `${a}²`;
     } else if (activeTrick === "mul5") {
-        a = (Math.floor(Math.random() * 499) + 10) * 2; // Forzar números pares para fluidez
+        a = (Math.floor(Math.random() * 499) + 10) * 2; 
         currentAnswer = a * 5;
         probEl.innerText = `${a} × 5`;
     } else if (activeTrick === "near100") {
-        a = Math.floor(Math.random() * 9) + 91; // 91 a 99
+        a = Math.floor(Math.random() * 9) + 91; 
         b = Math.floor(Math.random() * 9) + 91;
         currentAnswer = a * b;
         probEl.innerText = `${a} × ${b}`;
+    } else if (activeTrick === "div5") {
+        // Generamos un resultado exacto primero para evitar decimales táctiles
+        currentAnswer = Math.floor(Math.random() * 150) + 10; 
+        a = currentAnswer * 5;
+        probEl.innerText = `${a} ÷ 5`;
+    } else if (activeTrick === "mul9") {
+        a = Math.floor(Math.random() * 89) + 11; 
+        currentAnswer = a * 9;
+        probEl.innerText = `${a} × 9`;
+    } else if (activeTrick === "mul15") {
+        // Forzamos números pares para que la mitad sea exacta y rápida de sumar
+        a = (Math.floor(Math.random() * 45) + 5) * 2; 
+        currentAnswer = a * 15;
+        probEl.innerText = `${a} × 15`;
     }
     probEl.classList.remove('flash-green', 'flash-red');
 }
