@@ -93,7 +93,7 @@ function startGame() {
     currentInput = "";
     updateUI();
     
-    screens.setup.classList.remove('active');
+    screens.theory.classList.remove('active');
     screens.game.classList.add('active');
     
     generateScenario();
